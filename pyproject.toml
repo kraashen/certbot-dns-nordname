@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "certbot-dns-nordname"
+version = "0.1.0"
+description = "Nordname DNS Authenticator plugin for Certbot"
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "Apache-2.0" }
+authors = [
+	{ name = "Tomi Juntunen", email = "tomi.juntunen@iki.fi" },
+]
+keywords = ["certbot", "dns", "nordname", "plugin", "authenticator"]
+dependencies = [
+	"certbot>=5.4.0",
+	"acme>=5.4.0",
+	"requests>=2.33.0",
+]
+
+[project.optional-dependencies]
+dev = [
+	"pytest>=9.0.2",
+	"requests-mock>=1.12.1",
+	"mock>=5.2.0",
+	"pylint>=3.3.8",
+]
+
+[project.entry-points."certbot.plugins"]
+dns-nordname = "certbot_dns_nordname.dns_nordname:Authenticator"
+
+[tool.hatch.build.targets.wheel]
+packages = ["certbot_dns_nordname"]
+
+[tool.pytest.ini_options]
+python_files = ["test_*.py", "*_test.py"]
+
+[tool.pylint.main]
+ignore = [".venv", ".pytest_cache"]
+jobs = 0
+
+[tool.pylint.messages_control]
+disable = [
+	"missing-module-docstring",
+	"missing-class-docstring",
+	"missing-function-docstring",
+]
+
+[tool.pylint.format]
+max-line-length = 100
